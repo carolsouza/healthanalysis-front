@@ -1,3 +1,4 @@
+import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import UserForm from "./pages/UserForm";
@@ -10,7 +11,7 @@ render(
     <GlobalStyles />
     <Router>
       <Routes>
-        <Route path="/user-form" element={<UserForm />} />
+        <Route path="/cadastrar" element={<UserForm />} />
       </Routes>
     </Router>
   </>,

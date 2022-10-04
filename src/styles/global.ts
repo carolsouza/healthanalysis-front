@@ -6,6 +6,7 @@ export const GlobalStyles = createGlobalStyle`
     --grafite: #202020;
     --cinza: rgb(53, 53, 53, 0.2);
     --black: #181818;
+    --green: #29B985
   }
   ::-webkit-scrollbar { 
     display: none; 
