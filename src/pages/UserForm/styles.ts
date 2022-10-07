@@ -32,34 +32,6 @@ export const FormContainer = styled.div`
     }
 `;
 
-export const FormRadioInputs = styled.input`
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-`
-
-export const FormSelectInputs = styled.select`
-    width: 100%;
-    height: 40px;
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    margin: 5px 0px;
-
-    option{
-        padding: 5px;
-        border-radius: 0;
-    }
-`
-
-export const FormInputs = styled.input`
-    width: 100%;
-    height: 40px;
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    margin: 5px 0px;
-`
 
 export const FormLabel = styled.label`
     color: #FFF;
@@ -77,6 +49,26 @@ export const FormDiv = styled.div<FormDivProps>`
     flex-direction: column;
     margin-right: 15px;
     width: ${props => props.divWidth};
+
+    input, .select-input { 
+        width: 100%;
+        height: 40px;
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        margin: 5px 0px;
+
+        option{
+            padding: 5px;
+            border-radius: 0;
+        }
+    }
+
+    input[type="radio"]{
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
     
     @media(max-width: 544px){
         width: 100%;
