@@ -4,6 +4,7 @@ import { Formik, ErrorMessage, Field, Form, FormikHelpers } from "formik";
 import * as yup from "yup";
 
 import api from "../../services/api";
+import { useNavigate } from 'react-router-dom';
 
 import TopBar from "../../components/TopBar";
 import {
@@ -16,8 +17,9 @@ import {
   FormLabel,
   FormRow,
   FormSubtitle,
-} from "./styles";
+} from "../../styles/global";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface UserProps {
   nome: string;
@@ -50,6 +52,8 @@ function UserForm() {
   const [uf, setUF] = useState("");
   const [listUFs, setListUFs] = useState([]);
   const [listCities, setListCities] = useState([]);
+
+  let navigate = useNavigate();
 
   const initialValues: UserProps = {
     nome: "",
@@ -85,7 +89,7 @@ function UserForm() {
         if (data) {
           localStorage.setItem("app-token", data.token);
           localStorage.setItem("user", values.email);
-          // history.push("/home");
+          navigate("/home");
         }
       })
       .catch((error) => {
@@ -102,7 +106,7 @@ function UserForm() {
     );
 
     ufList.then((res) => {
-      console.log(res)
+      console.log(res);
       setListUFs(res.data);
     });
   }, []);
@@ -156,7 +160,7 @@ function UserForm() {
               <FormRow>
                 <FormDiv divWidth="100%">
                   <FormLabel>Senha</FormLabel>
-                  <Field name="senha" />
+                  <Field name="senha" type="password" />
                 </FormDiv>
               </FormRow>
               <FormRow>
@@ -190,7 +194,11 @@ function UserForm() {
                   <Field as="select" name="cidade" className="select-input">
                     <option value="">Selecione...</option>
                     {listCities.map((city: CityProps) => {
-                      return <option key={city.id} value={city.nome}>{city.nome}</option>;
+                      return (
+                        <option key={city.id} value={city.nome}>
+                          {city.nome}
+                        </option>
+                      );
                     })}
                   </Field>
                 </FormDiv>
@@ -210,8 +218,12 @@ function UserForm() {
               </FormRow>
               <ButtonDiv>
                 <ActionBtn type="submit">Vamos começar!</ActionBtn>
-                <BtnLegend>
+                {/* <BtnLegend>
                   Você será redirecionado para o aplicativo Health Records
+                </BtnLegend> */}
+
+                <BtnLegend>
+                  Já possui uma conta? <Link to="/login">Logar-se</Link>
                 </BtnLegend>
               </ButtonDiv>
             </Form>
