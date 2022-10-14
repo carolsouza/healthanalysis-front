@@ -82,7 +82,7 @@ function UserForm() {
 
     api
       .post("/users", {
-        values,
+        ...values,
       })
       .then((response) => {
         const { data } = response;

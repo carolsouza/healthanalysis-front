@@ -58,7 +58,7 @@ function UserLogin() {
 
     api
       .post("/auth", {
-        values,
+        ...values,
       })
       .then((response) => {
         const { data } = response;
