@@ -18,7 +18,7 @@ import {
   FormSubtitle,
 } from "../../styles/global";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface UserLoginProps {
   senha: string;
@@ -46,14 +46,13 @@ function UserLogin() {
       .string()
       .min(3, "Digite uma senha válida")
       .max(50)
-      .required("Senhanecessário!"),
+      .required("Senha necessária!"),
   });
 
   const handleSubmit = async (
     values: UserLoginProps,
     { setSubmitting }: FormikHelpers<UserLoginProps>
   ) => {
-    console.log(values);
     setSubmitting(false);
 
     api
@@ -62,9 +61,14 @@ function UserLogin() {
       })
       .then((response) => {
         const { data } = response;
+        console.log(data);
         if (data) {
+          const userInfos = {
+            email: data.users.email,
+            nome: data.users.nome,
+          };
           localStorage.setItem("app-token", data.token);
-          localStorage.setItem("user", values.email);
+          localStorage.setItem("user", JSON.stringify(userInfos));
           navigate("/home");
         }
       })
@@ -75,13 +79,13 @@ function UserLogin() {
         }
       });
 
-      
+    navigate("/home");
   };
 
   return (
     <>
-      <TopBar/>
-      <ContentContainer >
+      <TopBar />
+      <ContentContainer>
         <FormContainer divWidth="500px">
           <Formik
             initialValues={initialValues}
@@ -90,27 +94,28 @@ function UserLogin() {
           >
             <Form>
               <FormSubtitle>
-                Entre em sua conta para visualizar suas triagens
+                Entre em sua conta para visualizar suas consultas
               </FormSubtitle>
 
               <FormRow>
                 <FormDiv divWidth="100%">
                   <FormLabel>E-mail</FormLabel>
-                  <Field name="email" />
+                  <Field name="email" required />
                 </FormDiv>
               </FormRow>
               <FormRow>
                 <FormDiv divWidth="100%">
                   <FormLabel>Senha</FormLabel>
-                  <Field name="senha" type="password" />
+                  <Field name="senha" type="password" required />
                 </FormDiv>
               </FormRow>
-          
+
               <ButtonDiv>
                 <ActionBtn type="submit">Entrar</ActionBtn>
 
                 <BtnLegend>
-                  Não possui uma conta? <Link to="/cadastrar">Cadastrar-se</Link>
+                  Não possui uma conta?{" "}
+                  <Link to="/cadastrar">Cadastrar-se</Link>
                 </BtnLegend>
               </ButtonDiv>
             </Form>

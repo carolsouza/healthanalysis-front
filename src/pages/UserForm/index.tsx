@@ -4,7 +4,7 @@ import { Formik, ErrorMessage, Field, Form, FormikHelpers } from "formik";
 import * as yup from "yup";
 
 import api from "../../services/api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import TopBar from "../../components/TopBar";
 import {
@@ -77,7 +77,7 @@ function UserForm() {
     values: UserProps,
     { setSubmitting }: FormikHelpers<UserProps>
   ) => {
-    // console.log(values);
+    console.log(values);
     setSubmitting(false);
 
     api
@@ -112,7 +112,7 @@ function UserForm() {
   }, []);
 
   useEffect(() => {
-    console.log(uf);
+    console.log("SELECIONADO", uf);
     if (uf) {
       const populatedCities = axios.get(
         `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
@@ -137,7 +137,8 @@ function UserForm() {
           >
             <Form>
               <FormSubtitle>
-                Faça seu cadastro para começarmos a triagem da sua consulta
+                Faça seu cadastro para começarmos a fazer a ficha da sua
+                consulta
               </FormSubtitle>
 
               <FormRow>
@@ -218,9 +219,9 @@ function UserForm() {
               </FormRow>
               <ButtonDiv>
                 <ActionBtn type="submit">Vamos começar!</ActionBtn>
-                {/* <BtnLegend>
+                <BtnLegend>
                   Você será redirecionado para o aplicativo Health Records
-                </BtnLegend> */}
+                </BtnLegend>
 
                 <BtnLegend>
                   Já possui uma conta? <Link to="/login">Logar-se</Link>
