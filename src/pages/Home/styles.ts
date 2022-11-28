@@ -17,6 +17,10 @@ export const ContentContainer = styled.div`
 
 export const PatientName = styled.h1`
   padding: 10px;
+  color: #fff;
+  border-bottom: 1px solid #181818;
+  width: 50%;
+  text-align: center;
 `;
 
 export const CardHeader = styled.div`
@@ -34,7 +38,7 @@ export const CardContainer = styled.div`
   height: auto;
   background-color: #fff;
   border-radius: 5px;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const CardTicket = styled.h4`

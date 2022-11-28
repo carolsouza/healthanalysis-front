@@ -114,7 +114,7 @@ function Home() {
       <Modals
         isOpen={modalIsOpen}
         closeModal={closeModal}
-        triagem={selectedTriagem}
+        consulta={selectedTriagem}
       />
       <LinkLogOut href="/login" onClick={clearTK}>
         Log Out

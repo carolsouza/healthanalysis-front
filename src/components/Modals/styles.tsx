@@ -63,3 +63,46 @@ export const BtnClose = styled.button`
   right: 5px;
   cursor: pointer;
 `;
+
+export const ModalHeader = styled.div`
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+export const SpecialityName = styled.h2`
+  margin-right: 20px;
+`;
+
+export const ConsultaDate = styled.p``;
+
+export const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+`;
+
+export const QuestionDiv = styled.h5`
+  font-weight: bold;
+  color: #000;
+`;
+
+export const AwnserDiv = styled.p`
+  color: #000;
+  padding: 5px;
+`;
+
+export const CancelDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const BtnCancel = styled.button`
+  background-color: #990000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 30%;
+`;
