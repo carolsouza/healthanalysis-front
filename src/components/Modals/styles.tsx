@@ -69,13 +69,29 @@ export const ModalHeader = styled.div`
   padding: 10px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+
+    p {
+      width: 100%;
+      text-align: center;
+    }
+  }
 `;
 
 export const SpecialityName = styled.h2`
   margin-right: 20px;
+
+  @media (max-width: 768px) {
+    margin-right: 0px;
+  }
 `;
 
-export const ConsultaDate = styled.p``;
+export const ConsultaDate = styled.p`
+  width: 200px;
+`;
 
 export const ModalContent = styled.div`
   display: flex;
@@ -105,4 +121,10 @@ export const BtnCancel = styled.button`
   border-radius: 5px;
   padding: 10px;
   width: 30%;
+`;
+
+export const InvalidText = styled.p`
+  color: red;
+  font-weight: bold;
+  padding: 5px;
 `;

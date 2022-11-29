@@ -13,7 +13,7 @@ function Dashboard() {
 
   return (
     <>
-      <TopBar />
+      <TopBar isLogged={false} page="dashboard" />
       <ContentContainer>
         <MetabaseContent>
           <MetabaseDashboard></MetabaseDashboard>

@@ -4,6 +4,10 @@ interface OpenDivProps {
   isOpen: boolean;
 }
 
+interface EmptyResultsProps {
+  isEmpty: boolean;
+}
+
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,10 +29,13 @@ export const PatientName = styled.h1`
 
 export const CardHeader = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
 `;
 
-export const CardDate = styled.p``;
+export const CardDate = styled.p`
+  margin-right: 10px;
+`;
 
 export const CardContainer = styled.div`
   display: flex;
@@ -86,6 +93,7 @@ export const VerMaisButton = styled.button`
 
 export const ConsultasContainer = styled.div<OpenDivProps>`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
+  flex-direction: column;
 `;
 
 export const FichaContainer = styled.div<OpenDivProps>`
@@ -94,10 +102,23 @@ export const FichaContainer = styled.div<OpenDivProps>`
   width: 50%;
   min-width: 500px;
   height: auto;
+`;
+
+export const QuestionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 500px;
+  height: auto;
   background-color: #fff;
   border-radius: 5px;
   padding: 30px;
   box-shadow: 4px 4px 8px #888888;
+  margin-top: 10px;
+
+  h2 {
+    text-align: center;
+  }
 `;
 
 export const QuestionDiv = styled.h5`
@@ -109,4 +130,27 @@ export const QuestionDiv = styled.h5`
 export const AwnserDiv = styled.p`
   color: #000;
   padding: 5px;
+`;
+
+export const EmptyResultsDiv = styled.div<EmptyResultsProps>`
+  display: ${(props) => (props.isEmpty ? "flex" : "none")};
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+export const LabelRedirect = styled.p`
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
+export const LegendRedirect = styled.p`
+  color: #fff;
+  font-size: 0.7rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: -5px;
 `;

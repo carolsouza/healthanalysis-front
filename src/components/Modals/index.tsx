@@ -4,6 +4,7 @@ import {
   BtnClose,
   CancelDiv,
   ConsultaDate,
+  InvalidText,
   Modal,
   ModalContent,
   ModalHeader,
@@ -14,6 +15,8 @@ import {
 import { IoMdClose } from "react-icons/io";
 import { ConsultasProps } from "../../interfaces/consultas";
 import moment from "moment";
+import api from "../../services/api";
+import { useState } from "react";
 
 interface ModalsProps {
   isOpen: boolean;
@@ -22,6 +25,18 @@ interface ModalsProps {
 }
 
 const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
+  const [message, setMessage] = useState("");
+  const [consultaStatus, setConsultaStatus] = useState(consulta?.status);
+
+  async function handleCancel() {
+    api.patch(`/consultas/${consulta?.id}`).then((res) => {
+      console.log(res);
+
+      setMessage("Consulta cancelada!");
+      setConsultaStatus(false);
+    });
+  }
+
   return (
     <>
       <OpacityBg
@@ -44,13 +59,14 @@ const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
           <ConsultaDate>
             {moment(consulta?.data_consulta).format("DD-MM-YYYY HH:mm")}
           </ConsultaDate>
+          {!consultaStatus && <InvalidText>Cancelada</InvalidText>}
         </ModalHeader>
         <ModalContent>
           <QuestionDiv>Teve dor de cabeça?</QuestionDiv>
           <AwnserDiv>{consulta?.dor_cabeca ? "Sim" : "Não"}</AwnserDiv>
           <QuestionDiv>Sentiu febre?</QuestionDiv>
           <AwnserDiv>{consulta?.febre ? "Sim" : "Não"}</AwnserDiv>
-          <QuestionDiv>Teve nausea?</QuestionDiv>
+          <QuestionDiv>Teve náusea?</QuestionDiv>
           <AwnserDiv>{consulta?.nausea ? "Sim" : "Não"}</AwnserDiv>
           <QuestionDiv>
             Alguma informação que acredite ser relevante que não tenha sido
@@ -58,9 +74,13 @@ const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
           </QuestionDiv>
           <AwnserDiv>{consulta?.campo_extra}</AwnserDiv>
         </ModalContent>
-        <CancelDiv>
-          <BtnCancel>Cancelar Consulta</BtnCancel>
-        </CancelDiv>
+        {consultaStatus ? (
+          <CancelDiv>
+            <BtnCancel onClick={handleCancel}>Cancelar Consulta</BtnCancel>
+          </CancelDiv>
+        ) : (
+          <InvalidText>{message}</InvalidText>
+        )}
       </Modal>
     </>
   );

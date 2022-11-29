@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Formik, ErrorMessage, Field, Form, FormikHelpers } from "formik";
 import * as yup from "yup";
@@ -20,6 +20,7 @@ import {
 } from "../../styles/global";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import LoadingBackground from "../../components/Loading";
 
 interface UserLoginProps {
   senha: string;
@@ -28,6 +29,7 @@ interface UserLoginProps {
 
 function UserLogin() {
   const [validationError, setValidationError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   let navigate = useNavigate();
 
@@ -55,6 +57,7 @@ function UserLogin() {
     { setSubmitting }: FormikHelpers<UserLoginProps>
   ) => {
     setSubmitting(false);
+    setIsLoading(true);
 
     api
       .post("/auth", {
@@ -74,20 +77,31 @@ function UserLogin() {
         }
 
         setValidationError("");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
         if (error.response.status === 401 || error.response.status === 400) {
           setValidationError("Usuário ou senha inválidos!");
         }
+        setIsLoading(false);
       });
   };
 
+  useEffect(() => {
+    const usuario = localStorage.getItem("user");
+
+    if (usuario) {
+      navigate("/home");
+    }
+  }, []);
+
   return (
     <>
-      <TopBar />
+      <TopBar isLogged={false} />
+      <LoadingBackground isLoading={isLoading}></LoadingBackground>
       <ContentContainer>
-        <FormContainer divWidth="500px">
+        <FormContainer divWidth="500px" divMargin="60px">
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}

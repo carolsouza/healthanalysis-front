@@ -31,16 +31,31 @@ export const GlobalStyles = createGlobalStyle`
 //Forms global styles
 interface FormDivProps {
   divWidth?: string;
+  divMargin?: string;
 }
 
-export const ContentContainer = styled.div`
+interface ContentContainerProps {
+  flexDirection?: string;
+}
+
+export const ContentContainer = styled.div<ContentContainerProps>`
   display: flex;
+  flex-direction: ${(props) => props.flexDirection || "row"};
   width: 100vw;
   height: auto;
   margin-top: 60px;
   justify-content: center;
   align-items: center;
   top: 0;
+
+  input {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px 0px;
+  }
 `;
 
 export const FormContainer = styled.div<FormDivProps>`
@@ -55,6 +70,7 @@ export const FormContainer = styled.div<FormDivProps>`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  margin-top: ${(props) => props.divMargin || "0px"};
 
   @media (max-width: 700px) {
     width: 90%;
@@ -128,7 +144,6 @@ export const ActionBtn = styled.button`
   border: none;
   border-radius: 5px;
   padding: 10px;
-  width: 40%;
   font-weight: bold;
   background-color: var(--green);
   text-align: center;

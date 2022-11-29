@@ -7,4 +7,5 @@ export interface ConsultasProps {
   febre: boolean;
   nausea: boolean;
   campo_extra: string;
+  status: boolean;
 }
