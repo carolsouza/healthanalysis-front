@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TopBar from "../../components/TopBar";
 import { ContentContainer } from "../../styles/global";
+import MetabaseDashboard from "../../components/Metabase";
+import { MetabaseContent } from "./styles";
 
 function Dashboard() {
   const [data, setData] = useState<string>("");
@@ -13,7 +15,9 @@ function Dashboard() {
     <>
       <TopBar />
       <ContentContainer>
-        <h1>Exibir dashboard</h1>
+        <MetabaseContent>
+          <MetabaseDashboard></MetabaseDashboard>
+        </MetabaseContent>
       </ContentContainer>
     </>
   );

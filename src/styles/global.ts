@@ -37,7 +37,7 @@ export const ContentContainer = styled.div`
   display: flex;
   width: 100vw;
   height: auto;
-  margin-top: 50px;
+  margin-top: 60px;
   justify-content: center;
   align-items: center;
   top: 0;
