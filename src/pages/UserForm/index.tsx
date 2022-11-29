@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormRow,
   FormSubtitle,
+  InvalidUserText,
 } from "../../styles/global";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -49,7 +50,7 @@ interface CityProps {
 
 function UserForm() {
   const [validationError, setValidationError] = useState<string>("");
-  const [uf, setUF] = useState("");
+  // const [uf, setUF] = useState("");
   const [listUFs, setListUFs] = useState([]);
   const [listCities, setListCities] = useState([]);
 
@@ -71,6 +72,17 @@ function UserForm() {
       .min(5, "Usuários precisam ter pelo menos 5 dígitos")
       .max(12)
       .required("Usuário necessário!"),
+    email: yup
+      .string()
+      .email()
+      .min(5, "Digite um e-mail válido")
+      .max(50)
+      .required("E-mail necessário!"),
+    senha: yup
+      .string()
+      .min(3, "Digite uma senha válida")
+      .max(50)
+      .required("Senha necessária!"),
   });
 
   const handleSubmit = async (
@@ -80,25 +92,40 @@ function UserForm() {
     console.log(values);
     setSubmitting(false);
 
-    api
-      .post("/users", {
-        ...values,
-      })
-      .then((response) => {
-        const { data } = response;
-        if (data) {
-          localStorage.setItem("app-token", data.token);
-          localStorage.setItem("user", values.email);
-          navigate("/home");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.status === 401 || error.response.status === 400) {
-          setValidationError("Usuário ou senha inválidos!");
-        }
-      });
+    // api
+    //   .post("/users", {
+    //     ...values,
+    //   })
+    //   .then((response) => {
+    //     const { data } = response;
+    //     if (data) {
+    //       localStorage.setItem("app-token", data.token);
+    //       localStorage.setItem("user", values.email);
+    //       setValidationError("");
+    //       navigate("/home");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     if (error.response.status === 401 || error.response.status === 400) {
+    //       setValidationError(error.response.data);
+    //     }
+    //   });
   };
+
+  function handleState(uf) {
+    console.log("SELECIONADO", uf);
+    if (uf) {
+      const populatedCities = axios.get(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf.target.value}/municipios`
+      );
+      populatedCities.then((res) => {
+        setListCities(res.data);
+      });
+    } else {
+      console.log("nenhum estado selecionado");
+    }
+  }
 
   useEffect(() => {
     const ufList = axios.get(
@@ -110,20 +137,6 @@ function UserForm() {
       setListUFs(res.data);
     });
   }, []);
-
-  useEffect(() => {
-    console.log("SELECIONADO", uf);
-    if (uf) {
-      const populatedCities = axios.get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
-      );
-      populatedCities.then((res) => {
-        setListCities(res.data);
-      });
-    } else {
-      console.log("nenhum estado selecionado");
-    }
-  }, [uf]);
 
   return (
     <>
@@ -155,30 +168,26 @@ function UserForm() {
               <FormRow>
                 <FormDiv divWidth="100%">
                   <FormLabel>E-mail</FormLabel>
-                  <Field name="email" />
+                  <Field name="email" required />
                 </FormDiv>
               </FormRow>
               <FormRow>
                 <FormDiv divWidth="100%">
                   <FormLabel>Senha</FormLabel>
-                  <Field name="senha" type="password" />
+                  <Field name="senha" type="password" required />
                 </FormDiv>
               </FormRow>
               <FormRow>
                 <FormDiv divWidth="200px">
                   <FormLabel>Data de Nascimento</FormLabel>
-                  <Field type="date" name="dataNascimento" />
+                  <Field type="date" name="dataNascimento" required />
                 </FormDiv>
                 <FormDiv divWidth="180px">
                   <FormLabel>Estado</FormLabel>
-                  <Field
-                    as="select"
+                  <select
                     name="UF"
                     className="select-input"
-                    onChange={(e: any) => {
-                      setUF(e.target.value);
-                    }}
-                    value={uf}
+                    onChange={handleState}
                   >
                     <option value="">Selecione...</option>
                     {listUFs.map((uf: UFProps) => {
@@ -188,7 +197,7 @@ function UserForm() {
                         </option>
                       );
                     })}
-                  </Field>
+                  </select>
                 </FormDiv>
                 <FormDiv divWidth="180px">
                   <FormLabel>Cidade</FormLabel>
@@ -218,6 +227,7 @@ function UserForm() {
                 </FormDiv>
               </FormRow>
               <ButtonDiv>
+                <InvalidUserText>{validationError}</InvalidUserText>
                 <ActionBtn type="submit">Vamos começar!</ActionBtn>
                 <BtnLegend>
                   Você será redirecionado para o aplicativo Health Records

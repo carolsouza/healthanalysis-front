@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormRow,
   FormSubtitle,
+  InvalidUserText,
 } from "../../styles/global";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -71,6 +72,8 @@ function UserLogin() {
           localStorage.setItem("user", JSON.stringify(userInfos));
           navigate("/home");
         }
+
+        setValidationError("");
       })
       .catch((error) => {
         console.log(error);
@@ -78,8 +81,6 @@ function UserLogin() {
           setValidationError("Usuário ou senha inválidos!");
         }
       });
-
-    navigate("/home");
   };
 
   return (
@@ -109,7 +110,7 @@ function UserLogin() {
                   <Field name="senha" type="password" required />
                 </FormDiv>
               </FormRow>
-
+              <InvalidUserText>{validationError}</InvalidUserText>
               <ButtonDiv>
                 <ActionBtn type="submit">Entrar</ActionBtn>
 

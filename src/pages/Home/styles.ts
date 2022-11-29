@@ -39,6 +39,7 @@ export const CardContainer = styled.div`
   background-color: #fff;
   border-radius: 5px;
   padding: 20px;
+  box-shadow: 4px 4px 8px #888888;
 `;
 
 export const CardTicket = styled.h4`
@@ -96,6 +97,7 @@ export const FichaContainer = styled.div<OpenDivProps>`
   background-color: #fff;
   border-radius: 5px;
   padding: 30px;
+  box-shadow: 4px 4px 8px #888888;
 `;
 
 export const QuestionDiv = styled.h5`

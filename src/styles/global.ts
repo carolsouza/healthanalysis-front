@@ -146,3 +146,11 @@ export const BtnLegend = styled.p`
   color: #fff;
   text-align: center;
 `;
+
+export const InvalidUserText = styled.p`
+  color: red;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+`;
