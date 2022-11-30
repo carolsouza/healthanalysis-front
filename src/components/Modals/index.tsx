@@ -16,7 +16,7 @@ import { IoMdClose } from "react-icons/io";
 import { ConsultasProps } from "../../interfaces/consultas";
 import moment from "moment";
 import api from "../../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ModalsProps {
   isOpen: boolean;
@@ -36,6 +36,10 @@ const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
       setConsultaStatus(false);
     });
   }
+
+  useEffect(() => {
+    setConsultaStatus(consulta?.status);
+  }, []);
 
   return (
     <>
@@ -59,7 +63,7 @@ const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
           <ConsultaDate>
             {moment(consulta?.data_consulta).format("DD-MM-YYYY HH:mm")}
           </ConsultaDate>
-          {!consultaStatus && <InvalidText>Cancelada</InvalidText>}
+          {!consulta?.status && <InvalidText>Cancelada</InvalidText>}
         </ModalHeader>
         <ModalContent>
           <QuestionDiv>Teve dor de cabeça?</QuestionDiv>
@@ -74,7 +78,7 @@ const Modals: React.FC<ModalsProps> = ({ isOpen, closeModal, consulta }) => {
           </QuestionDiv>
           <AwnserDiv>{consulta?.campo_extra}</AwnserDiv>
         </ModalContent>
-        {consultaStatus ? (
+        {consulta?.status ? (
           <CancelDiv>
             <BtnCancel onClick={handleCancel}>Cancelar Consulta</BtnCancel>
           </CancelDiv>

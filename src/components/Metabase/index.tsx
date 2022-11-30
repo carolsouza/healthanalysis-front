@@ -12,7 +12,7 @@ const MetabaseDashboard = () => {
   }, []);
 
   return (
-    <iframe src={iframeUrl} frameBorder="0" width="1000" height="600"></iframe>
+    <iframe src={iframeUrl} frameBorder="0" width="100%" height="600"></iframe>
   );
 };
 

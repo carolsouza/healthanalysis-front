@@ -47,6 +47,7 @@ export const CardContainer = styled.div`
   border-radius: 5px;
   padding: 20px;
   box-shadow: 4px 4px 8px #888888;
+  margin-top: 20px;
 `;
 
 export const CardTicket = styled.h4`

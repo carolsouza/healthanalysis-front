@@ -30,6 +30,7 @@ interface UserProps {
 
 function SearchResults() {
   const [isLoading, setIsLoading] = useState(false);
+  const [resultado, setResultado] = useState("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [consulta, setConsulta] = useState<ConsultasProps>({
     id: -1,
@@ -64,6 +65,7 @@ function SearchResults() {
 
         await getAnamnese(res.data.email);
         await getUser(ids[1]);
+        await getResultado(ids[0]);
         setError("");
         setIsLoading(false);
       })
@@ -93,6 +95,15 @@ function SearchResults() {
     await api
       .get(`/users/${id}`)
       .then((res) => setUser({ email: res.data.email, name: res.data.nome }))
+      .catch((err) => {
+        setError(err.response.data);
+      });
+  }
+
+  async function getResultado(id) {
+    await api
+      .get(`/resultados/${id}`)
+      .then((res) => setResultado(res.data.gravidade))
       .catch((err) => {
         setError(err.response.data);
       });
@@ -128,6 +139,9 @@ function SearchResults() {
             <ConsultaDate>
               {moment(consulta?.data_consulta).format("DD-MM-YYYY HH:mm")}
             </ConsultaDate>
+            <div style={{ marginBottom: "10px" }}>
+              Nível de Gravidade: {resultado}
+            </div>
             <QuestionDiv>Teve dor de cabeça?</QuestionDiv>
             <AwnserDiv>{consulta?.dor_cabeca ? "Sim" : "Não"}</AwnserDiv>
             <QuestionDiv>Sentiu febre?</QuestionDiv>
